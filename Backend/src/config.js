@@ -17,6 +17,7 @@ const {
 module.exports = {
     port: PORT,
     urlHost: URL_HOST,
+    frontendUrl: FRONTEND_URL,
     openWeatherApiKey: OPEN_WEATHER_API_KEY,
     firebaseConfig: {
         apiKey: API_KEY,
