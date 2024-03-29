@@ -1,9 +1,20 @@
-<script setup>
+<script>
 import { RouterView } from 'vue-router'
+import Navigation from './components/Navigation.vue'
+
+export default {
+  name: 'App',
+  components: {
+    Navigation
+  }
+}
 </script>
 
 <template>
-  <RouterView />
+  <div class="m-auto bg-slate-900">
+    <Navigation />
+    <RouterView />
+  </div>
 </template>
 
 <style>
