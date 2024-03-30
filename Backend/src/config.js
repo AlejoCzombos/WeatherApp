@@ -5,6 +5,7 @@ dotenv.config();
 const {
     PORT,
     URL_HOST,
+    FRONTEND_URL,
     OPEN_WEATHER_API_KEY, 
     API_KEY,
     AUTH_DOMAIN,
