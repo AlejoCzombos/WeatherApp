@@ -15,3 +15,7 @@ exports.getCities = async (req, res) => {
 exports.deleteCity = async (req, res) => {
     return await weatherService.deleteCity(req, res);
 }
+
+exports.refreshData = async (req, res) => {
+    return await weatherService.refreshData(req, res);
+}

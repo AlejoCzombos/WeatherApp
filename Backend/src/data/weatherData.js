@@ -11,6 +11,7 @@ const {
 } = require('firebase/firestore')
 
 const db = getFirestore(firebase);
+const weatherService = require('../service/weatherService');
 
 exports.getCities = async () => {
     const cities = [];
@@ -21,19 +22,35 @@ exports.getCities = async () => {
     return cities;
 };
 
-exports.addCity = async (city) => {
-    try{
-        const cities = await this.getCities();
+exports.getWeather = async () => {
+    const weather = [];
+    const querySnapshot = await getDocs(collection(db, 'cities'));
+    querySnapshot.forEach(doc => {
+        weather.push(doc.data());
+    });
+    return weather;
+}
 
-        if(cities.includes(city)){
-            return city;
-        }
-        
-        await addDoc(collection(db, 'cities'), { city: city });
-        return city;
-    }catch (error){
-        console.error('Error adding to Firebase: ', error);
+exports.addCity = async (data) => {
+    try{
+        await addDoc(collection(db, 'cities'), data);
+    }catch(errors){
+        console.error('Error adding to Firebase: ', errors);
         throw new Error('Error adding document to Firebase');
+    }
+}
+
+exports.refreshData = async () => {
+    try{
+        const querySnapshot = await getDocs(collection(db, 'cities'));
+        querySnapshot.forEach(async doc => {
+            const city = doc.data().city;
+            const data = await weatherService.getWeatherForCity(city);
+            await updateDoc(doc.ref, data);
+        });
+    }catch(errors){
+        console.error('Error refreshing data: ', errors);
+        throw new Error('Error refreshing data');
     }
 }
 

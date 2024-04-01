@@ -3,6 +3,7 @@ const router = express.Router();
 const weatherController = require('../controller/weatherController');
 
 router.get('/weather', weatherController.getWeather);
+router.post('/weather/refresh', weatherController.refreshData);
 router.get('/weather/cities', weatherController.getCities);
 router.post('/weather/cities', weatherController.addCity);
 router.delete('/weather/cities', weatherController.deleteCity);
