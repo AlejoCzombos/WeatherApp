@@ -15,6 +15,7 @@ exports.refreshData = async (req, res) => {
 exports.getWeather = async (req, res) => {
     try{
         const weatherDataReturn = await weatherData.getWeather();
+        weatherDataReturn.sort((a, b) => a.city.localeCompare(b.city));
         return res.status(200).send(weatherDataReturn);
     }catch(error){
         console.error('Error getting weather: ', error);
@@ -44,6 +45,7 @@ exports.getWeatherForCity = async (city) => {
 exports.getCities = async (res) => {
     try{
         const cities = await weatherData.getCities();
+        cities.sort();
         return res.status(200).send(cities);
     }catch (error){
         console.error('Error getting cities: ', error);
