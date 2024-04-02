@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@steveyuowo/vue-hot-toast':
+    specifier: ^1.2.5
+    version: 1.2.5
   vue:
     specifier: ^3.4.21
     version: 3.4.21
@@ -524,6 +527,14 @@ packages:
   /@rushstack/eslint-patch@1.8.0:
     resolution: {integrity: sha512-0HejFckBN2W+ucM6cUOlwsByTKt9/+0tWhqUffNIcHqCXkthY/mZ7AuYPK/2IIaGWhdl0h+tICDO0ssLMd6XMQ==}
     dev: true
+
+  /@steveyuowo/vue-hot-toast@1.2.5:
+    resolution: {integrity: sha512-mJmdFnNgBz9L0qT3PXcI88Rr2+LSxDkSeFnELO61OlesdBOMmWWv07xHPI/MTTdOD26Nfjj1YOKVH70REIRieg==}
+    dependencies:
+      vue: 3.4.21
+    transitivePeerDependencies:
+      - typescript
+    dev: false
 
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}

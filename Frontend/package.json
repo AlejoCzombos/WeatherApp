@@ -11,6 +11,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@steveyuowo/vue-hot-toast": "^1.2.5",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },
