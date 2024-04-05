@@ -8,6 +8,10 @@ exports.addCity = async (req, res) => {
     return await weatherService.addCity(req, res);
 }
 
+exports.getForecastWeather = async (req, res) => {
+    return await weatherService.getForecastWeatherForCity(req, res);
+}
+
 exports.getCities = async (req, res) => {
     return await weatherService.getCities(res);
 }
