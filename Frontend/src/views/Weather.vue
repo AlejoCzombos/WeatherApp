@@ -1,15 +1,44 @@
 <script>
+import { getCityWeather } from '@/api/weather.api'
+import CurrentWeather from '@/components/CurrentWeather.vue'
+import HourlyWeather from '@/components/HourlyWeather.vue'
+import DailyWeather from '@/components/DailyWeather.vue'
+
 export default {
   name: 'Weather',
-  components: {},
-  created() {
-    console.log(this.$route.params.city)
+  components: {
+    HourlyWeather,
+    DailyWeather,
+    CurrentWeather
+  },
+  data() {
+    return {
+      cityWeather: {}
+    }
+  },
+  async created() {
+    await this.getWeather()
+  },
+  methods: {
+    async getWeather() {
+      const cityName = this.$route.params.city
+      const cityWeather = await getCityWeather(cityName)
+      this.cityWeather = cityWeather
+    }
   }
 }
 </script>
 
 <template>
-  <main class="max-w-4xl m-auto pt-20 bg-slate-900">
-    <h1>Weather of: {{ this.$route.params.city }}</h1>
+  <main
+    class="max-w-4xl m-auto pt-20 bg-sky-800 px-5"
+    v-if="cityWeather && cityWeather.currentWeather"
+  >
+    <CurrentWeather
+      :currentWeather="this.cityWeather.currentWeather"
+      :city="this.cityWeather.city"
+    />
+    <HourlyWeather class="border-y-2 border-slate-200" :hourlyWeather="this.cityWeather.hourly" />
+    <DailyWeather :dailyWeather="this.cityWeather.daily" />
   </main>
 </template>
