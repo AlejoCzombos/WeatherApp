@@ -13,6 +13,17 @@ const {
 const db = getFirestore(firebase);
 const weatherService = require('../service/weatherService');
 
+exports.getCityByName = async (cityName) => {
+    const querySnapshot = await getDocs(collection(db, 'cities'));
+    let city = null;
+    querySnapshot.forEach(doc => {
+        if(doc.data().city === cityName){
+            city = doc.data();
+        }
+    });
+    return city;
+}
+
 exports.getCities = async () => {
     const cities = [];
     const querySnapshot = await getDocs(collection(db, 'cities'));
