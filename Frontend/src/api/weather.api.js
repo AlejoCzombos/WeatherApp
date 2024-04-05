@@ -11,6 +11,12 @@ export const refreshWeatherData = async () => {
     return data;
 }
 
+export const getCityWeather = async (cityName) => {
+    const response = await fetch(`http://localhost:8000/api/weather/forecast/${cityName}`);
+    const data = await response.json();
+    return data;
+}
+
 export const addCity = async (cityName) => {
     const response = await fetch('http://localhost:8000/api/weather/cities', {
         method: 'POST',
