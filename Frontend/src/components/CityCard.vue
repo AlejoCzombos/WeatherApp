@@ -26,7 +26,7 @@ export default {
       this.refreshData()
     },
     goToWeather(e) {
-      if (e.target === this.$refs.deleteButton) {
+      if (e.target === this.$refs.deleteButton || e.target === this.$refs.deleteIcon) {
         return
       }
 
@@ -37,8 +37,11 @@ export default {
 </script>
 
 <template>
-  <article @click="goToWeather" class="relative min-h-60 shadow-sm overflow-hidden">
-    <div class="absolute top-0 left-0 min-h-full h-full w-full bg-slate-900/40 z-20">
+  <article
+    @click="goToWeather"
+    class="relative min-h-60 drop-shadow-md group overflow-hidden cursor-pointer"
+  >
+    <div class="absolute top-0 left-0 min-h-full h-full w-full z-20">
       <video
         autoplay
         muted
@@ -48,11 +51,13 @@ export default {
         <source :src="`/videos/${this.city.currentWeather.status}.mp4`" type="video/mp4" />
       </video>
     </div>
-    <div class="absolute top-0 left-0 p-5 flex flex-col justify-between h-full w-full z-30">
+    <div
+      class="absolute top-0 left-0 p-5 flex flex-col justify-between h-full w-full z-30 bg-slate-900/30 group-hover:bg-slate-900/50 transition-all duration-200 ease-in-out"
+    >
       <h2 class="text-3xl font-bold text-white">{{ this.city.city }}</h2>
       <footer class="flex justify-end items-center gap-2">
         <span class="text-white text-4xl font-medium"
-          >{{ this.city.currentWeather.temperature }}&deg;</span
+          >{{ this.city.currentWeather.temperature.current }}&deg;</span
         >
         <img
           :src="`/conditions/${this.city.currentWeather.status}.svg`"
@@ -67,7 +72,7 @@ export default {
       @click="deleteCity()"
       class="absolute bottom-0 left-0 size-15 bg-slate-700 rounded-tr-2xl z-30 flex justify-center items-center p-2 hover:scale-[115%] hover:translate-x-1 hover:-translate-y-1 transition-all duration-200 ease-in-out"
     >
-      <img src="/icons/TrashIcon.svg" alt="delete" class="size-9" />
+      <img ref="deleteIcon" src="/icons/TrashIcon.svg" alt="delete" class="size-9" />
     </button>
   </article>
 </template>
