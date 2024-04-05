@@ -4,16 +4,6 @@ import { getCitiesWeather } from '@/api/weather.api'
 export default {
   name: 'Home',
   components: { CityCard },
-  props: {
-    isEditing: {
-      type: Boolean,
-      required: true
-    },
-    refreshDataTrigger: {
-      type: Boolean,
-      required: true
-    }
-  },
   data() {
     return {
       citiesWeather: []
@@ -28,8 +18,16 @@ export default {
       this.citiesWeather = citiesWeather
     }
   },
+  computed: {
+    refreshDataTrigger() {
+      return this.$store.state.refreshDataTrigger
+    },
+    isEditing() {
+      return this.$store.state.isEditing
+    }
+  },
   watch: {
-    refreshDataTrigger: function () {
+    refreshDataTrigger() {
       this.getWeatherData()
     }
   }

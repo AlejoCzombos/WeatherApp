@@ -9,7 +9,7 @@ export default {
   methods: {
     closeModal(e) {
       if (e.target === this.$refs.modal) {
-        this.$emit('close-modal')
+        this.$store.dispatch('toggleModal')
       }
     },
     addCity() {

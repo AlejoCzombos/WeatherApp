@@ -3,20 +3,23 @@ import { RouterLink } from 'vue-router'
 
 export default {
   name: 'Navigation',
-  components: {},
-  props: {
-    isEditing: Boolean,
-    isInHome: Boolean
-  },
   methods: {
     openModal() {
-      this.$emit('open-modal')
+      this.$store.dispatch('toggleModal')
     },
     refreshData() {
-      this.$emit('refresh-data')
+      this.$store.dispatch('refreshDataTrigger')
     },
     modifyCities() {
-      this.$emit('modify-cities')
+      this.$store.dispatch('modifyCities')
+    }
+  },
+  computed: {
+    isEditing() {
+      return this.$store.state.isEditing
+    },
+    isInHome() {
+      return this.$store.state.isInHome
     }
   }
 }
