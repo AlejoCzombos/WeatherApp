@@ -12,7 +12,8 @@ export default {
     return {
       modalIsOpen: false,
       isEditing: false,
-      refreshDataTrigger: false
+      refreshDataTrigger: false,
+      isInHome: true
     }
   },
   components: {
@@ -26,6 +27,13 @@ export default {
     },
     modifyCities() {
       this.isEditing = !this.isEditing
+    },
+    checkRoute() {
+      if (this.$route.name === 'Home') {
+        this.isInHome = true
+      } else {
+        this.isInHome = false
+      }
     },
     async refreshData() {
       const toasts = toast.loading('Actualizando datos...')
@@ -47,6 +55,11 @@ export default {
         toast.update(toasts, { type: 'error', message: 'Error al añadir la ciudad' })
       }
     }
+  },
+  watch: {
+    $route() {
+      this.checkRoute()
+    }
   }
 }
 </script>
@@ -59,6 +72,7 @@ export default {
       v-on:refresh-data="refreshData"
       v-on:modify-cities="modifyCities"
       v-bind:isEditing="isEditing"
+      v-bind:isInHome="isInHome"
     />
     <RouterView v-bind:isEditing="isEditing" v-bind:refreshDataTrigger="refreshDataTrigger" />
   </div>
