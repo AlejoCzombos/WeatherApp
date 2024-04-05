@@ -30,15 +30,14 @@ export default {
 </script>
 
 <template>
-  <main
-    class="max-w-4xl m-auto pt-20 bg-sky-800 px-5"
-    v-if="cityWeather && cityWeather.currentWeather"
-  >
-    <CurrentWeather
-      :currentWeather="this.cityWeather.currentWeather"
-      :city="this.cityWeather.city"
-    />
-    <HourlyWeather class="border-y-2 border-slate-200" :hourlyWeather="this.cityWeather.hourly" />
-    <DailyWeather :dailyWeather="this.cityWeather.daily" />
+  <main class="max-w-4xl m-auto pt-20 bg-sky-800 h-full min-h-screen px-5">
+    <div v-if="cityWeather && cityWeather.currentWeather">
+      <CurrentWeather
+        :currentWeather="this.cityWeather.currentWeather"
+        :city="this.cityWeather.city"
+      />
+      <HourlyWeather class="border-y-2 border-slate-200" :hourlyWeather="this.cityWeather.hourly" />
+      <DailyWeather :dailyWeather="this.cityWeather.daily" />
+    </div>
   </main>
 </template>
