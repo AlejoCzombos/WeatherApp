@@ -1,9 +1,12 @@
 <script>
+import { RouterLink } from 'vue-router'
+
 export default {
   name: 'Navigation',
   components: {},
   props: {
-    isEditing: Boolean
+    isEditing: Boolean,
+    isInHome: Boolean
   },
   methods: {
     openModal() {
@@ -20,8 +23,12 @@ export default {
 </script>
 
 <template>
-  <header class="fixed top-0 right-0 w-full min-h-20 bg-slate-800 py-5 z-40 drop-shadow-md">
+  <header
+    class="fixed top-0 right-0 w-full min-h-20 py-5 z-40 drop-shadow-md"
+    :class="{ 'bg-slate-800': isInHome, 'bg-sky-900': !isInHome }"
+  >
     <nav
+      v-if="isInHome"
       class="flex flex-row justify-between items-center max-w-4xl mx-auto px-5 text-white font-semibold"
     >
       <span>Ciudades</span>
@@ -50,6 +57,24 @@ export default {
           class="size-9 p-1 hover:scale-125 transition-all ease-in-out cursor-pointer"
         />
       </ul>
+    </nav>
+    <nav
+      v-else
+      class="flex flex-row justify-between items-center max-w-4xl mx-auto px-5 text-white font-semibold"
+    >
+      <RouterLink to="/">
+        <img
+          class="size-9 -rotate-90 stroke-white hover:bg-sky-700 p-1 rounded-full cursor-pointer transition-all ease-in-out hover:scale-125"
+          src="/icons/UpIcon.svg"
+          alt="Back to home"
+        />
+      </RouterLink>
+      <span class="text-xl">
+        {{ new Date().toLocaleDateString('es-ES', { weekday: 'short' }) }}
+        {{ new Date().toLocaleDateString('es-ES', { day: '2-digit' }) }}
+        {{ new Date().toLocaleDateString('es-ES', { month: 'short' }) }}
+      </span>
+      <span class="text-xl">&deg; C</span>
     </nav>
   </header>
 </template>
