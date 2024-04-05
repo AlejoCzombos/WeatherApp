@@ -28,6 +28,10 @@ exports.getWeatherForCity = async (city) => {
     try{
         const apiKey = config.openWeatherApiKey;
         const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=${apiKey}`)
+        
+        const sunrise = new Date(response.data.sys.sunrise * 1000).getHours();
+        const sunset = new Date(response.data.sys.sunset * 1000).getHours();
+        
         const dataResponse = {
             city: response.data.name,
             currentWeather: {
@@ -39,6 +43,8 @@ exports.getWeatherForCity = async (city) => {
                     min: Math.round(response.data.main.temp_min),
                     max: Math.round(response.data.main.temp_max)
                 },
+                sunrise: sunrise,
+                sunset: sunset,
                 wind: {
                     speed: response.data.wind.speed * 3.6,
                     deg: response.data.wind.deg
