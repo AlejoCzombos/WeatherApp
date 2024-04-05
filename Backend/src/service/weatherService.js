@@ -1,6 +1,7 @@
 const weatherData = require('../data/weatherData');
 const config = require('../config');
 const axios = require('axios');
+const weatherDescription = require('../utils/weather');
 
 exports.refreshData = async (req, res) => {
     try{
@@ -26,19 +27,82 @@ exports.getWeather = async (req, res) => {
 exports.getWeatherForCity = async (city) => {
     try{
         const apiKey = config.openWeatherApiKey;
-        const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&APPID=${apiKey}`)
-        const celsiusTemp = (response.data.main.temp - 32) * 5/9;
+        const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=${apiKey}`)
         const dataResponse = {
             city: response.data.name,
             currentWeather: {
-                temperature: Math.round(celsiusTemp),
-                status: response.data.weather[0].icon
-            }
+                status: response.data.weather[0].icon,
+                description: weatherDescription.weatherDescriptions[response.data.weather[0].id],
+                temperature: {
+                    current: Math.round(response.data.main.temp),
+                    feels_like: Math.round(response.data.main.feels_like),
+                    min: Math.round(response.data.main.temp_min),
+                    max: Math.round(response.data.main.temp_max)
+                },
+                wind: {
+                    speed: response.data.wind.speed * 3.6,
+                    deg: response.data.wind.deg
+                },
+                extras: {
+                    humidity: response.data.main.humidity
+                },
+            },
+            coord: response.data.coord
         }
         return dataResponse;
     }catch (error){
         console.error('Error getting weather: ', error);
-        throw new Error('Error getting weather');
+        return res.status(400).send('Error getting weather');
+    }
+}
+
+exports.getForecastWeatherForCity = async (req, res) => {
+    try{
+        const cityName = req.params.city;
+        const apiKey = config.openWeatherApiKey;
+        const cityData = await weatherData.getCityByName(cityName);
+        const response = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${cityData.coord.lat}&lon=${cityData.coord.lon}&units=metric&appid=${apiKey}`);
+
+        const hourlyList = response.data.list.slice(0,8);
+        const dailyList = response.data.list.filter((item) => item.dt_txt.includes('12:00:00'));
+
+        const hourlyData = hourlyList.map((item) => {
+            return {
+                time: item.dt_txt.substring(11,16),
+                temperature: Math.round(item.main.temp),
+                status: item.weather[0].icon
+            }
+        }
+        );
+        const dailyData = dailyList.map((item) => {
+            const date = new Date(item.dt_txt);
+            return {
+                date: item.dt_txt.substring(0,10),
+                day: date.toLocaleDateString('es-ES', {weekday: 'long'}),
+                temperature: {
+                    min: Math.round(item.main.temp_min),
+                    max: Math.round(item.main.temp_max),
+                    feels_like: Math.round(item.main.feels_like)
+                },
+                extras: {
+                    humidity: item.main.humidity,
+                    precipitation: item.pop
+                },
+                status: item.weather[0].icon
+            }
+        });
+
+        const forecastData = {
+            city: response.data.city.name,
+            currentWeather: cityData.currentWeather,
+            hourly : hourlyData,
+            daily : dailyData
+        }
+
+        return res.status(200).send(forecastData);
+    }catch (error){
+        console.error('Error getting weather: ', error);
+        return res.status(400).send('Error getting weather');
     }
 }
 
