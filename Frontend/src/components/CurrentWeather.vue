@@ -19,9 +19,11 @@ export default {
 </script>
 
 <template>
-  <section class="flex flex-col justify-between items-start text-white gap-16 py-12 relative">
+  <section
+    class="flex flex-col justify-between items-start text-white gap-16 py-12 relative overflow-hidden p-5"
+  >
     <header>
-      <h2 class="text-3xl font-semibold">{{ city }}</h2>
+      <h2 class="text-4xl font-semibold">{{ city }}</h2>
     </header>
     <div>
       <p class="text-7xl font-semibold">{{ currentWeather.temperature.current }}&deg;</p>
@@ -37,9 +39,9 @@ export default {
       </div>
     </div>
     <footer>
-      <p class="text-xl text-semibold">{{ currentWeather.description }}</p>
-      <p class="text-sm text-slate-300">Viento: {{ Math.round(currentWeather.wind.speed) }} km/h</p>
-      <p class="text-sm text-slate-300">Humedad: {{ currentWeather.extras.humidity }}%</p>
+      <p class="text-2xl text-semibold">{{ currentWeather.description }}</p>
+      <p class="text-md text-slate-200">Viento: {{ Math.round(currentWeather.wind.speed) }} km/h</p>
+      <p class="text-md text-slate-200">Humedad: {{ currentWeather.extras.humidity }}%</p>
     </footer>
     <img
       class="absolute top-1/2 -right-[220px] md:right-8 size-[25rem] transform -translate-y-1/2"

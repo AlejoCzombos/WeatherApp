@@ -49,7 +49,7 @@ export default {
 
 <template>
   <main
-    class="max-w-4xl m-auto pt-20 h-full min-h-screen px-5"
+    class="max-w-4xl m-auto pt-20 h-full min-h-screen"
     :class="{
       'bg-sky-500': isDay,
       'bg-sky-950': !isDay,

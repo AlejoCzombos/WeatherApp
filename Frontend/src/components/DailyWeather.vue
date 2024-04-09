@@ -12,23 +12,42 @@ export default {
 </script>
 
 <template>
-  <section class="flex flex-col items-center w-full">
+  <section class="flex flex-col items-center w-full p-5">
     <article
-      class="grid grid-cols-3 text-white w-full h-16 content-center"
+      class="grid grid-cols-4 md:grid-cols-5 text-white w-full h-16 content-center"
       v-for="day in dailyWeather"
       :key="day.index"
     >
-      <div class="flex justify-start items-center text-xl">
+      <div class="flex justify-start items-center text-lg gap-2">
         <span>{{ day.day.charAt(0).toUpperCase() + day.day.slice(1) }}</span>
+        <span class="text-slate-300 hidden md:block">{{ day.date }}</span>
       </div>
-      <img
-        :src="`/conditions/${day.status}.svg`"
-        class="size-8 justify-self-center"
-        alt="weather icon"
-      />
-      <div class="flex justify-end items-center gap-2">
+      <div class="flex justify-center items-center">
+        <img :src="`/conditions/${day.status}.svg`" class="size-11" alt="weather icon" />
+      </div>
+      <div class="md:flex justify-center items-center gap-2 hidden">
+        <p class="text-xl text-white">{{ day.extras.precipitation }}%</p>
+        <svg
+          class="size-6 stroke-slate-200"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M4 14.7519C3.37037 13.8768 3 12.8059 3 11.6493C3 9.20008 4.8 6.9375 7.5 6.5C8.34694 4.48637 10.3514 3 12.6893 3C15.684 3 18.1317 5.32251 18.3 8.25C19.8893 8.94488 21 10.6503 21 12.4969C21 13.5693 20.6254 14.5541 20 15.3275M12.5 12.9995L10.5 21.0008M8.5 11.9995L6.5 20.0008M16.5 12L14.5 20.0013"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+      <div class="flex md:justify-center justify-end items-center">
         <p class="text-xl text-white">{{ day.temperature.max }}&deg;</p>
-        <p class="text-xl text-slate-300">{{ day.temperature.min }}&deg;</p>
+        <img class="size-6" src="/icons/UpIcon.svg" alt="Max temperature icon" />
+      </div>
+      <div class="flex md:justify-center justify-end items-center">
+        <p class="text-xl text-white">{{ day.temperature.min }}&deg;</p>
+        <img class="size-6" src="/icons/DownIcon.svg" alt="Min temperature icon" />
       </div>
     </article>
   </section>

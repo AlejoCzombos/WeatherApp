@@ -12,11 +12,11 @@ export default {
 </script>
 
 <template>
-  <section class="flex py-4 flex-row justify-center overflow-x-scroll w-full h-44 border-slate-300">
+  <section id="hourly-weather" class="flex md:justify-center py-4 h-44 p-5">
     <div
       v-for="hourly in hourlyWeather"
       :key="hourly.index"
-      class="px-5 flex flex-col justify-center items-center text-white text-lg gap-3"
+      class="px-5 flex flex-col justify-center items-center text-white text-lg gap-2"
     >
       <p>{{ hourly.time }}</p>
       <img :src="`/conditions/${hourly.status}.svg`" class="size-12 py-1" alt="weather icon" />
@@ -25,4 +25,12 @@ export default {
   </section>
 </template>
 
-<style scoped></style>
+<style scoped>
+#hourly-weather {
+  max-width: 100vw;
+  overflow: scroll;
+}
+#hourly-weather::-webkit-scrollbar {
+  display: none;
+}
+</style>
