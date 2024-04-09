@@ -28,7 +28,7 @@ export default {
   >
     <form
       @submit.prevent="addCity"
-      class="bg-slate-800 rounded-lg w-[80%] max-w-xl p-5 shadow-lg text-white"
+      class="bg-slate-700 rounded-lg w-[80%] max-w-xl p-5 shadow-lg text-white"
     >
       <div class="flex flex-col gap-1">
         <label class="font-semibold text-lg" for="cityName">Nombre de la ciudad:</label>
@@ -43,7 +43,7 @@ export default {
       </div>
       <div class="flex flex-row justify-end gap-4 mt-5">
         <button
-          class="bg-slate-700 text-white px-4 py-2 rounded-lg hover:bg-slate-600 transition-all ease-in-out"
+          class="bg-slate-600 text-white px-4 py-2 rounded-lg hover:bg-slate-500 transition-all ease-in-out"
         >
           Agregar
         </button>
