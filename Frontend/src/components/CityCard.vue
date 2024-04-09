@@ -53,9 +53,11 @@ export default {
       autoplay
       muted
       loop
+      preload
       class="w-full h-full aspect-square md:aspect-auto object-cover object-center"
     >
       <source :src="`/videos/${this.city.currentWeather.status}.mp4`" type="video/mp4" />
+      Tu navegador no admite el elemento <code>video</code>
     </video>
   </div>
   <div
