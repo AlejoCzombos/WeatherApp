@@ -9,6 +9,11 @@ export default {
     city: {
       required: true
     }
+  },
+  computed: {
+    isDay() {
+      return this.$store.state.isDay
+    }
   }
 }
 </script>
@@ -37,8 +42,15 @@ export default {
       <p class="text-sm text-slate-300">Humedad: {{ currentWeather.extras.humidity }}%</p>
     </footer>
     <img
-      class="absolute top-1/2 -right-52 size-[25rem] transform -translate-y-1/2"
+      class="absolute top-1/2 -right-[220px] md:right-8 size-[25rem] transform -translate-y-1/2"
+      src="/sun.png"
+      v-if="isDay"
+      alt="time status"
+    />
+    <img
+      class="absolute top-1/2 -right-[220px] md:right-8 size-[25rem] transform -translate-y-1/2"
       src="/moon.png"
+      v-else
       alt="time status"
     />
   </section>

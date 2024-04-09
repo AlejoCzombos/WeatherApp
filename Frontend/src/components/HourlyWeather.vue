@@ -12,7 +12,7 @@ export default {
 </script>
 
 <template>
-  <section class="flex py-4 flex-row overflow-x-scroll w-full h-44 border-slate-300">
+  <section class="flex py-4 flex-row justify-center overflow-x-scroll w-full h-44 border-slate-300">
     <div
       v-for="hourly in hourlyWeather"
       :key="hourly.index"
@@ -24,3 +24,5 @@ export default {
     </div>
   </section>
 </template>
+
+<style scoped></style>

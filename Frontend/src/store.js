@@ -5,7 +5,8 @@ export const store = createStore({
     modalIsOpen: false,
     isEditing: false,
     refreshDataTrigger: false,
-    isInHome: true
+    isInHome: true,
+    isDay: true,
   },
   mutations: {
     toggleModal(state) {
@@ -20,6 +21,9 @@ export const store = createStore({
     refreshDataTrigger(state) {
       state.refreshDataTrigger = !state.refreshDataTrigger
     },
+    setIsDay(state, time){
+      state.isDay = time
+    }
   },
   actions: {
     toggleModal(context) {
@@ -34,5 +38,8 @@ export const store = createStore({
     refreshDataTrigger(context) {
       context.commit('refreshDataTrigger')
     },
+    setIsDay(context, time){
+      context.commit('setIsDay', time)
+    }
   }
 });

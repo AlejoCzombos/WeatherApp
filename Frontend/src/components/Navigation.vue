@@ -20,6 +20,9 @@ export default {
     },
     isInHome() {
       return this.$store.state.isInHome
+    },
+    isDay() {
+      return this.$store.state.isDay
     }
   }
 }
@@ -27,8 +30,12 @@ export default {
 
 <template>
   <header
-    class="fixed top-0 right-0 w-full min-h-20 py-5 z-40 drop-shadow-md"
-    :class="{ 'bg-slate-800': isInHome, 'bg-sky-900': !isInHome }"
+    class="fixed top-0 right-0 w-full min-h-20 py-5 z-40 drop-shadow-lg transition-all ease-in-out duration-300"
+    :class="{
+      'bg-slate-700': isInHome,
+      'bg-sky-500': !isInHome && isDay,
+      'bg-sky-950': !isInHome && !isDay
+    }"
   >
     <nav
       v-if="isInHome"
@@ -67,7 +74,11 @@ export default {
     >
       <RouterLink to="/">
         <img
-          class="size-9 -rotate-90 stroke-white hover:bg-sky-700 p-1 rounded-full cursor-pointer transition-all ease-in-out hover:scale-125"
+          class="size-9 -rotate-90 stroke-white p-1 rounded-full cursor-pointer transition-all ease-in-out hover:scale-125"
+          :class="{
+            'bg-sky-500 hover:bg-sky-400': !isInHome && isDay,
+            'bg-sky-950 hover:bg-sky-900': !isInHome && !isDay
+          }"
           src="/icons/UpIcon.svg"
           alt="Back to home"
         />
@@ -77,7 +88,7 @@ export default {
         {{ new Date().toLocaleDateString('es-ES', { day: '2-digit' }) }}
         {{ new Date().toLocaleDateString('es-ES', { month: 'short' }) }}
       </span>
-      <span class="text-xl">&deg; C</span>
+      <span class="text-xl">&deg;C</span>
     </nav>
   </header>
 </template>
