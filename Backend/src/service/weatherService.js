@@ -82,8 +82,11 @@ exports.getForecastWeatherForCity = async (req, res) => {
         );
         const dailyData = dailyList.map((item) => {
             const date = new Date(item.dt_txt);
+            fullDate = item.dt_txt.substring(0,10);
+            const formattedHour = fullDate.substring(8, 10) + "/" + fullDate.substring(5, 7);
+
             return {
-                date: item.dt_txt.substring(0,10),
+                date: formattedHour,
                 day: date.toLocaleDateString('es-ES', {weekday: 'long'}),
                 temperature: {
                     min: Math.round(item.main.temp_min),
@@ -125,7 +128,7 @@ exports.getCities = async (res) => {
 
 exports.addCity = async (req, res) => {
     try{
-        const cityName = req.body.city;
+        const cityName = req.body.city.toLowerCase();
 
         if(cityName === undefined || cityName === ''){ 
             return res.status(400).send('City name is required');
