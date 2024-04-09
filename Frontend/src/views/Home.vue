@@ -1,12 +1,15 @@
 <script>
-import CityCard from '@/components/CityCard.vue'
+import Cities from '@/components/Cities.vue'
 import { getCitiesWeather } from '@/api/weather.api'
+import LoadingSpinner from '@/components/LoadingSpinner.vue'
+
 export default {
   name: 'Home',
-  components: { CityCard },
+  components: { Cities, LoadingSpinner },
   data() {
     return {
-      citiesWeather: []
+      citiesWeather: [],
+      loading: true
     }
   },
   async created() {
@@ -16,14 +19,12 @@ export default {
     async getWeatherData() {
       const citiesWeather = await getCitiesWeather()
       this.citiesWeather = citiesWeather
+      this.loading = false
     }
   },
   computed: {
     refreshDataTrigger() {
       return this.$store.state.refreshDataTrigger
-    },
-    isEditing() {
-      return this.$store.state.isEditing
     }
   },
   watch: {
@@ -35,13 +36,11 @@ export default {
 </script>
 
 <template>
-  <main class="max-w-4xl m-auto grid sm:grid-cols-2 pt-20 bg-slate-900">
-    <div v-for="city in citiesWeather" :key="city.city">
-      <CityCard
-        v-bind:city="city"
-        v-bind:isEditing="isEditing"
-        v-bind:refreshData="this.getWeatherData"
-      />
-    </div>
+  <main
+    class="max-w-4xl m-auto pt-20 bg-slate-700 min-h-screen"
+    :class="{ 'flex justify-center items-center': loading }"
+  >
+    <LoadingSpinner v-if="loading" class="flex justify-center items-center" />
+    <Cities v-else v-bind:cities="citiesWeather" :refreshData="getWeatherData" />
   </main>
 </template>
