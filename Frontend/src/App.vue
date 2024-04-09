@@ -40,6 +40,12 @@ export default {
     },
     refreshDataTrigger() {
       return this.$store.state.refreshDataTrigger
+    },
+    isDay() {
+      return this.$store.state.isDay
+    },
+    isInHome() {
+      return this.$store.state.isInHome
     }
   },
   watch: {
@@ -54,7 +60,14 @@ export default {
 </script>
 
 <template>
-  <div class="m-auto bg-slate-900 min-h-screen">
+  <div
+    class="m-auto min-h-screen"
+    :class="{
+      'bg-slate-700': isInHome,
+      'bg-sky-500': !isInHome && isDay,
+      'bg-sky-950': !isInHome && !isDay
+    }"
+  >
     <AddCityModal v-if="modalIsOpen" v-on:add-city="addCity" />
     <Navigation />
     <RouterView />
