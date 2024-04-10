@@ -32,7 +32,7 @@ export default {
     },
     calculateTime() {
       const date = new Date()
-      const currentTime = date.getHours()
+      const currentTime = date.getHours() * 60 + date.getMinutes()
       const sunrise = this.$route.query.sunrise
       const sunset = this.$route.query.sunset
       const isDay = currentTime >= sunrise && currentTime < sunset

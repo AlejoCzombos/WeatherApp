@@ -1,4 +1,5 @@
 const URL_BASE = "https://weatherapp-of0p.onrender.com/api/weather";
+//const URL_BASE = "http://localhost:8000/api/weather";
 
 export const getCitiesWeather = async () => {
     const response = await fetch(URL_BASE);
