@@ -1,11 +1,18 @@
 <script>
 export default {
-  name: 'LoadingSpinner'
+  name: 'LoadingSpinner',
+  props: {
+    class: {
+      type: String,
+      default: ''
+    }
+  }
 }
 </script>
 
 <template>
   <svg
+    :class="class"
     aria-hidden="true"
     class="inline w-8 h-8 text-slate-300 animate-spin fill-blue-600"
     viewBox="0 0 100 101"
