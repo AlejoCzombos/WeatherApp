@@ -2,6 +2,7 @@
 import Cities from '@/components/Cities.vue'
 import { getCitiesWeather } from '@/api/weather.api'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import { toast } from '@steveyuowo/vue-hot-toast'
 
 export default {
   name: 'Home',
@@ -17,7 +18,9 @@ export default {
   },
   methods: {
     async getWeatherData() {
+      const loadingToast = toast.loading('Disculpe la demora, hosting gratuito 😅')
       const citiesWeather = await getCitiesWeather()
+      toast.update(loadingToast, { type: 'success', message: 'Información cargada correctamente' })
       this.citiesWeather = citiesWeather
       this.loading = false
     },
