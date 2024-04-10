@@ -32,11 +32,6 @@ export default {
     refreshDataTrigger() {
       return this.$store.state.refreshDataTrigger
     }
-  },
-  watch: {
-    refreshDataTrigger() {
-      this.getWeatherData()
-    }
   }
 }
 </script>
