@@ -15,7 +15,20 @@ exports.refreshData = async (req, res) => {
 
 exports.getWeather = async (req, res) => {
     try{
-        const weatherDataReturn = await weatherData.getWeather();
+        let weatherDataReturn = await weatherData.getWeather();
+
+        const currentDate = new Date();
+
+        if (weatherDataReturn[0].currentWeather.lastRefresh) {
+            const lastRefreshDate = weatherDataReturn[0].currentWeather.lastRefresh.toDate();
+            const differenceInHours = (currentDate - lastRefreshDate) / 1000 / 60 / 60;
+
+            if (differenceInHours >= 1) {
+                await weatherData.refreshData();
+                weatherDataReturn = await weatherData.getWeather();
+            }
+        }   
+
         weatherDataReturn.sort((a, b) => a.city.localeCompare(b.city));
         return res.status(200).send(weatherDataReturn);
     }catch(error){
@@ -35,9 +48,12 @@ exports.getWeatherForCity = async (city) => {
         const sunsetDate = new Date(response.data.sys.sunset * 1000);
         const sunset = sunsetDate.getHours() * 60 + sunsetDate.getMinutes();
         
+        const date = new Date();
+
         const dataResponse = {
             city: response.data.name,
             currentWeather: {
+                lastRefresh: date,
                 status: response.data.weather[0].icon,
                 description: weatherDescription.weatherDescriptions[response.data.weather[0].id],
                 temperature: {
